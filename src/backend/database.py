@@ -57,6 +57,7 @@ initial_activities = {
     },
     "Morning Fitness": {
         "description": "Early morning physical training and exercises",
+        "difficulty": "Beginner",
         "schedule": "Mondays, Wednesdays, Fridays, 6:30 AM - 7:45 AM",
         "schedule_details": {
             "days": ["Monday", "Wednesday", "Friday"],
