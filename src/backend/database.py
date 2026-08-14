@@ -45,6 +45,7 @@ initial_activities = {
     },
     "Programming Class": {
         "description": "Learn programming fundamentals and build software projects",
+        "difficulty": "Intermediate",
         "schedule": "Tuesdays and Thursdays, 7:00 AM - 8:00 AM",
         "schedule_details": {
             "days": ["Tuesday", "Thursday"],
@@ -56,6 +57,7 @@ initial_activities = {
     },
     "Morning Fitness": {
         "description": "Early morning physical training and exercises",
+        "difficulty": "Beginner",
         "schedule": "Mondays, Wednesdays, Fridays, 6:30 AM - 7:45 AM",
         "schedule_details": {
             "days": ["Monday", "Wednesday", "Friday"],
@@ -122,6 +124,7 @@ initial_activities = {
     },
     "Math Club": {
         "description": "Solve challenging problems and prepare for math competitions",
+        "difficulty": "Advanced",
         "schedule": "Tuesdays, 7:15 AM - 8:00 AM",
         "schedule_details": {
             "days": ["Tuesday"],
@@ -166,6 +169,7 @@ initial_activities = {
     },
     "Sunday Chess Tournament": {
         "description": "Weekly tournament for serious chess players with rankings",
+        "difficulty": "Advanced",
         "schedule": "Sundays, 2:00 PM - 5:00 PM",
         "schedule_details": {
             "days": ["Sunday"],
