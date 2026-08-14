@@ -199,6 +199,8 @@ section h3 {
   margin-top: auto;
   padding-top: 10px;
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   justify-content: center;
 }
 
@@ -297,6 +299,17 @@ section h3 {
   letter-spacing: 0.3px;
   text-transform: uppercase;
   border: none;
+}
+
+.share-button {
+  background-color: var(--background);
+  color: var(--primary);
+  border: 1px solid var(--primary-light);
+  width: 100%;
+}
+
+.share-button:hover {
+  background-color: #e8eaf6;
 }
 
 button {

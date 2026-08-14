@@ -586,6 +586,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </ul>
       </div>
       <div class="activity-card-actions">
+        <button class="share-button" type="button" data-activity="${name}">
+          <span aria-hidden="true">↗</span> Share activity
+        </button>
         ${
           currentUser
             ? `
@@ -604,6 +607,11 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    const shareButton = activityCard.querySelector(".share-button");
+    shareButton.addEventListener("click", () => {
+      shareActivity(name, details.description);
+    });
+
     // Add click handlers for delete buttons
     const deleteButtons = activityCard.querySelectorAll(".delete-participant");
     deleteButtons.forEach((button) => {
@@ -621,6 +629,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     activitiesList.appendChild(activityCard);
+  }
+
+  // Share an activity using the device's native share menu, or copy a link.
+  async function shareActivity(name, description) {
+    const shareData = {
+      title: `${name} - Mergington High School`,
+      text: `${name}: ${description}`,
+      url: `${window.location.origin}${window.location.pathname}#activity-${encodeURIComponent(
+        name
+      )}`,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        return;
+      }
+
+      await navigator.clipboard.writeText(
+        `${shareData.text}\n${shareData.url}`
+      );
+      showMessage("Activity link copied. Share it with your friends!", "success");
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        showMessage(
+          "Unable to share this activity. Please copy the page link instead.",
+          "error"
+        );
+      }
+    }
   }
 
   // Event listeners for search and filter
