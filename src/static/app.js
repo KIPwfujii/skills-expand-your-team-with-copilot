@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("activity-search");
   const searchButton = document.getElementById("search-button");
   const categoryFilters = document.querySelectorAll(".category-filter");
+  const difficultyFilters = document.querySelectorAll(".difficulty-filter");
   const dayFilters = document.querySelectorAll(".day-filter");
   const timeFilters = document.querySelectorAll(".time-filter");
 
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
+  const themeToggle = document.getElementById("theme-toggle");
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -37,12 +39,34 @@ document.addEventListener("DOMContentLoaded", () => {
   // State for activities and filters
   let allActivities = {};
   let currentFilter = "all";
+  let currentDifficulty = "";
   let searchQuery = "";
   let currentDay = "";
   let currentTimeRange = "";
 
   // Authentication state
   let currentUser = null;
+  let isDarkMode = localStorage.getItem("theme") === "dark";
+
+  function updateTheme() {
+    document.body.classList.toggle("dark-mode", isDarkMode);
+    themeToggle.setAttribute("aria-pressed", String(isDarkMode));
+    themeToggle.setAttribute(
+      "aria-label",
+      isDarkMode ? "Switch to light mode" : "Switch to dark mode"
+    );
+    themeToggle.querySelector(".theme-toggle-label").textContent = isDarkMode
+      ? "Light mode"
+      : "Dark mode";
+    themeToggle.querySelector("span").textContent = isDarkMode ? "☀️" : "🌙";
+  }
+
+  themeToggle.addEventListener("click", () => {
+    isDarkMode = !isDarkMode;
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+    updateTheme();
+  });
+  updateTheme();
 
   // Time range mappings for the dropdown
   const timeRanges = {
@@ -425,6 +449,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // The "All" difficulty option shows activities without a specified level.
+      if (
+        currentDifficulty
+          ? details.difficulty !== currentDifficulty
+          : details.difficulty
+      ) {
+        return;
+      }
+
       // Apply weekend filter if selected
       if (currentTimeRange === "weekend" && details.schedule_details) {
         const activityDays = details.schedule_details.days;
@@ -649,6 +682,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Update current filter and display filtered activities
       currentFilter = button.dataset.category;
+      displayFilteredActivities();
+    });
+  });
+
+  // Add event listeners to difficulty filter buttons
+  difficultyFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+      difficultyFilters.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      currentDifficulty = button.dataset.difficulty;
       displayFilteredActivities();
     });
   });
